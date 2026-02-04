@@ -7,10 +7,13 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(function (config) {
-  const accessToken: string | null = window.localStorage.getItem("accessToken");
+  if (typeof window !== "undefined") {
+    const accessToken: string | null =
+      window.localStorage.getItem("accessToken");
 
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
   }
   return config;
 });
